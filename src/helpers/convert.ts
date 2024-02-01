@@ -28,7 +28,11 @@ const convert = {
   // webp2png，这里 webpData 是方法因为不需要的话就不获取了
   png: (key: string, webpData: () => Promise<Buffer | Uint8Array | string>) =>
     cachedConvert(key + '.png', async (convertedPath) => {
-      await sharp(await webpData()).png().toFile(convertedPath);
+      await sharp(await webpData()).png({ palette: true }).toFile(convertedPath);
+    }),
+  jpeg: (key: string, webpData: () => Promise<Buffer | Uint8Array | string>) =>
+    cachedConvert(key + '.jpeg', async (convertedPath) => {
+      await sharp(await webpData()).jpeg({ quality: 100 }).toFile(convertedPath);
     }),
   webm2gif: (key: string, webmData: () => Promise<Buffer | Uint8Array | string>) =>
     cachedConvert(key + '.gif', async (convertedPath) => {

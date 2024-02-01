@@ -496,6 +496,15 @@ export default class ForwardService {
           });
           brief += '[Spoiler 图片]';
         }
+        else if (message.document?.mimeType === 'image/webp') {
+          const convertedPath = await convert.jpeg(message.document.id.toString(16), () => message.downloadMedia({}))
+          chain.push({
+            type: 'image',
+            file: convertedPath,
+            asface: !!message.sticker,
+          });
+          brief += '[表情包]'
+        }
         else {
           chain.push({
             type: 'image',
